@@ -66,7 +66,6 @@ env:
   REKERNEL_ENABLE: "false" # if u need Re:Kernel.
   DROIDSPACES_ENABLE: "false" # if u need Droidspaces or LXC/Docker.
   NOMOUNT_ENABLE: "false" # if u need NoMount.
-  VPNHIDE_ENABLE: "true"
 
   HOOK_METHOD: "syscall" # Manual hook method ->  syscall.
 
@@ -89,7 +88,7 @@ env:
   SKIP_PATCH: "false" # Ignore errors found in Patch Debugger.
 
   BUILD_OTHER_CONFIG: "false" # Merge config files.
-  MERGE_CONFIG_FILES: "vendor/debugfs.config"
+  MERGE_CONFIG_FILES: "vendor/debugfs.config,vendor/holi_QGKI.config"
 
   FREE_MORE_SPACE: "false" # if u want get more space, enabled it.
 
@@ -123,9 +122,8 @@ jobs:
         run: |
           # Only ${{ env.DEVICE_NAME }} use it.
           cd $GITHUB_WORKSPACE/device_kernel
-
-          cp /tmp/Patches/Patch/remove_modversion_check.patch ./
-          cp /tmp/Patches/Patch/add_automatic_dtbo_generation.patch ./
+          wget https://github.com/cyberc3dr/nGKI_Kernel_Build/raw/refs/heads/rebase/Patches/Patch/remove_modversion_check.patch
+          wget https://github.com/cyberc3dr/nGKI_Kernel_Build/raw/refs/heads/rebase/Patches/Patch/add_automatic_dtbo_generation.patch
 
           patch -p1 < remove_modversion_check.patch || true
           patch -p1 < add_automatic_dtbo_generation.patch || true
@@ -135,9 +133,6 @@ jobs:
 
       - name: 💿 Patch Kernel of Droidspaces
         uses: ./.github/workflows/patch-droidspaces
-
-      - name: 🛡 Patch Kernel of VPNHide
-        uses: ./.github/workflows/patch-vpnhide
 
       - name: 🔒 Patch Kernel of Baseband Guard
         uses: ./.github/workflows/patch-baseband-guard
