@@ -9,8 +9,8 @@ env:
   DEVICE_NAME : "realme_9_pro"
   DEVICE_CODENAME : "oscar"
 
-  CUSTOM_CMDS : "CLANG_TRIPLE=aarch64-linux-gnu-"
-  EXTRA_CMDS : "LD=ld.lld"
+  CUSTOM_CMDS : "CROSS_COMPILE=aarch64-linux-gnu- CLANG_TRIPLE=aarch64-linux-gnu-"
+  EXTRA_CMDS : "LLVM=1 LLVM_IAS=1"
 
   KERNEL_SOURCE : "https://github.com/Josh19-git/android_kernel_realme_sm6375.git"
   KERNEL_BRANCH : "lineage-23.2"
